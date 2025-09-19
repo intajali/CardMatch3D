@@ -7,16 +7,23 @@ using UnityEngine.Events;
 
 public class GameController : MonoBehaviour
 {
+
     [SerializeField] private GameDataManager dataManager;
     [SerializeField] private GridManager gridManager;
-
+    [SerializeField] private GamePlayHUD gamePlayHUD;
+ 
     public GameLayout gameLayouts;
 
     public static UnityAction<Card> OnCardSelectAction;
     public static UnityAction<Card> OnCardDeleteAction;
 
+    public static UnityAction GameStartedAction;
+    public static UnityAction GameRestartAction;
+
     private Card previousSelectedCard = null;
     private Card currentSelectedCard = null;
+
+    private Coroutine gameTimerRoutine = null;
 
     void OnEnable()
     {
@@ -25,17 +32,32 @@ public class GameController : MonoBehaviour
 
     public void Init()
     {
+        gridManager.ResetGrid();
         OnCardSelectAction += OnCardSelected;
         OnCardDeleteAction += OnCardDeleted;
+        GameRestartAction += OnGameRestarted;
+        GameStartedAction += OnGameStarted;
+
         previousSelectedCard = null ;
         currentSelectedCard = null ;
 
         GameSetup();
     }
 
+    /// <summary>
+    /// Notify on game started
+    /// </summary>
+    private void OnGameStarted()
+    {
+        GameManager.Instance.ChangeState(GameManager.Instance.gameplayState);
+        if(gameTimerRoutine  != null)
+            StopCoroutine(gameTimerRoutine);
+        gameTimerRoutine = StartCoroutine( gamePlayHUD.UpdateTimer());
+    }
 
     public void GameSetup()
     {
+        gamePlayHUD.RenderView();
         gridManager.CreateGameBoard(gameLayouts.rowCount, gameLayouts.columnCount);
         gridManager.GenerateCardData(gameLayouts.rowCount, gameLayouts.columnCount, dataManager.GetCardData());
     }
@@ -81,12 +103,23 @@ public class GameController : MonoBehaviour
         gridManager.DeleteCard(card);
     }
 
+    /// <summary>
+    /// On Game Restarted.
+    /// </summary>
+    private void OnGameRestarted()
+    {
+    }
+
     private void OnDisable()
     {
         OnCardSelectAction -= OnCardSelected;
         OnCardSelectAction -= OnCardDeleted;
+        GameStartedAction -= OnGameStarted;
+
+        GameRestartAction -= OnGameRestarted;
+
 
     }
 
-   
+
 }

@@ -4,17 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GridManager : MonoBehaviour
 {
     [SerializeField] private RectTransform gridStartPoint;
     [SerializeField] private RectTransform gridRectTransform;
-
+    [SerializeField] private Image gridLayoutImage;
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private Transform cardParent;
-
-    public int row;
-    public int column;
 
     private float cardWidth;
     private float cardHeight;
@@ -22,19 +20,13 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Vector2 spacing = new Vector2(10, 10);
     [SerializeField] private Vector2 padding = new Vector2(10, 10);
 
-    private List<Vector2> gridPositions;
-
-    List<Card> generatedCardList = new List<Card>();
-    private List<CardDataModel> cardDatas;
+    private List<Vector2> gridPositions = new List<Vector2>();
+    private List<Card> generatedCardList = new List<Card>();
+    private List<CardDataModel> cardDatas = new List<CardDataModel>();
 
     private WaitForSeconds cardGenerationDelay = new WaitForSeconds(0.5f);
     private Coroutine cardGenerateRoutine = null;
 
-
-    private void Start()
-    {
-       // CreateGameBoard(row, column);
-    }
 
     /// <summary>
     /// 
@@ -43,6 +35,7 @@ public class GridManager : MonoBehaviour
     /// <param name="columns"></param>
     public void CreateGameBoard(int rows, int columns)
     {
+
         if(rows == 0 || columns == 0) { return; }
 
         if(rows * columns % 2 != 0) {
@@ -50,7 +43,7 @@ public class GridManager : MonoBehaviour
             return;
         }
 
-        gridPositions = new List<Vector2>();
+        gridPositions.Clear();
 
         float gridWidth = gridRectTransform.rect.width;
         float gridHeight = gridRectTransform.rect.height;
@@ -74,8 +67,8 @@ public class GridManager : MonoBehaviour
                 gridPositions.Add(gridPosition);
             }
         }
+        gridLayoutImage.enabled = true;
 
-       
     }
 
     /// <summary>
@@ -86,7 +79,7 @@ public class GridManager : MonoBehaviour
     /// <param name="cards"></param>
     public void GenerateCardData(int rowCount, int columnCount, List<CardDataModel> cards)
     {
-        cardDatas = new List<CardDataModel>();
+        cardDatas.Clear();
         int requiredCardCount = (rowCount * columnCount) / 2;
 
        // List<int> randomSpriteIndex = GetRandomUniqueNumbers(cards, requiredCardCount);
@@ -104,6 +97,7 @@ public class GridManager : MonoBehaviour
             StopCoroutine(cardGenerateRoutine);
             cardGenerateRoutine = null;
         }
+
         cardGenerateRoutine = StartCoroutine(StartCreatingCards());
 
 
@@ -171,6 +165,7 @@ public class GridManager : MonoBehaviour
         {
             generatedCardList[i].HideCard();
         }
+        GameController.GameStartedAction?.Invoke();
     }
 
     /// <summary>
@@ -188,6 +183,14 @@ public class GridManager : MonoBehaviour
         {
 
         }
+    }
+
+    public void ResetGrid()
+    {
+        gridLayoutImage.enabled = false;
+        generatedCardList.Clear();
+        gridPositions.Clear();
+        cardDatas.Clear();
     }
 
     /// <summary>
