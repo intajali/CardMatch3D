@@ -71,7 +71,9 @@ public class PausePanelView : MonoBehaviour
     /// </summary>
     private void OnRestartButtonClicked()
     {
+        GameManager.Instance.ChangeState(GameManager.Instance.stateHold);
         DisablePanel();
+        GameController.GameRestartAction?.Invoke();
     }
 
 

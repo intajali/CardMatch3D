@@ -16,6 +16,6 @@ public class StateGamePlay : IGameState
 
     public void UpdateState(GameManager manager)
     {
-        manager.ChangeState(manager.gameplayState);
+        manager.ChangeState(this);
     }
 }

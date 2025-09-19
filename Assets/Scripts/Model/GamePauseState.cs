@@ -16,6 +16,6 @@ public class GamePauseState : IGameState
 
     public void UpdateState(GameManager manager)
     {
-        manager.ChangeState(manager.pauseState);
+        manager.ChangeState(this);
     }
 }

@@ -2,6 +2,7 @@ using CardMatch.DataModel;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -183,6 +184,20 @@ public class GridManager : MonoBehaviour
         {
 
         }
+    }
+
+    /// <summary>
+    /// Clear all Cards
+    /// </summary>
+    public void ClearCards()
+    {
+        if (generatedCardList == null) return;
+
+        foreach (Card card in generatedCardList)
+        {
+          DestroyImmediate(card.gameObject);
+        }
+        generatedCardList.Clear();
     }
 
     public void ResetGrid()

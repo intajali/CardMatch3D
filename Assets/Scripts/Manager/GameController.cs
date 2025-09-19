@@ -108,6 +108,11 @@ public class GameController : MonoBehaviour
     /// </summary>
     private void OnGameRestarted()
     {
+        gridManager.ClearCards();
+        gridManager.ResetGrid();
+
+        Invoke("GameSetup",0.25f);
+
     }
 
     private void OnDisable()

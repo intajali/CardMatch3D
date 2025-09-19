@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     public GamePauseState pauseState = new GamePauseState();
     public StateGamePlay gameplayState = new StateGamePlay();
+    public StateHold stateHold = new StateHold();
 
     public IGameState GetCurrentState => currentState;
 

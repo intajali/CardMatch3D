@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\UI\PausePanelView.cs" />
     <Compile Include="Assets\Scripts\Model\GamePauseState.cs" />
     <Compile Include="Assets\Scripts\Model\StateGamePlay.cs" />
+    <Compile Include="Assets\Scripts\Model\StateHold.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
