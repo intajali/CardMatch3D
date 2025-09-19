@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameDataManager dataManager;
     [SerializeField] private GridManager gridManager;
     [SerializeField] private GamePlayHUD gamePlayHUD;
+    [SerializeField] private GameOverPanelView gameOverPanelView;
  
     public GameLayout gameLayouts;
 
@@ -19,6 +20,7 @@ public class GameController : MonoBehaviour
 
     public static UnityAction GameStartedAction;
     public static UnityAction GameRestartAction;
+    public static UnityAction GameOverAction;
 
     private Card previousSelectedCard = null;
     private Card currentSelectedCard = null;
@@ -37,12 +39,15 @@ public class GameController : MonoBehaviour
         OnCardDeleteAction += OnCardDeleted;
         GameRestartAction += OnGameRestarted;
         GameStartedAction += OnGameStarted;
+        GameOverAction += OnGameOver;
 
         previousSelectedCard = null ;
         currentSelectedCard = null ;
 
         GameSetup();
     }
+
+   
 
     /// <summary>
     /// Notify on game started
@@ -55,6 +60,9 @@ public class GameController : MonoBehaviour
         gameTimerRoutine = StartCoroutine( gamePlayHUD.UpdateTimer());
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void GameSetup()
     {
         gamePlayHUD.RenderView();
@@ -76,15 +84,18 @@ public class GameController : MonoBehaviour
             return;
         }
 
-        // Check for Match
+        // Check for Match Card
         if (previousSelectedCard.CardID == currentSelectedCard.CardID)
         {
             SoundManager.Instance.PlayAudio(AudioType.CARD_MATCHED);
             previousSelectedCard.DeleteCard();
             currentSelectedCard.DeleteCard();
+            gamePlayHUD.UpdateScore(10);
+            
         }
         else 
         {
+            gamePlayHUD.UpdateTurnCount();
             SoundManager.Instance.PlayAudio(AudioType.CARD_UNMATCHED);
             previousSelectedCard.HideCard();
             currentSelectedCard.HideCard();
@@ -115,12 +126,21 @@ public class GameController : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    private void OnGameOver()
+    {
+        GameManager.Instance.ChangeState(GameManager.Instance.stateGameOver);
+        gameOverPanelView.Render(gamePlayHUD.CurrectScore, gamePlayHUD.TotalGamePlayTime);
+    }
+
     private void OnDisable()
     {
         OnCardSelectAction -= OnCardSelected;
         OnCardSelectAction -= OnCardDeleted;
         GameStartedAction -= OnGameStarted;
-
+        GameOverAction -= OnGameOver;
         GameRestartAction -= OnGameRestarted;
 
 

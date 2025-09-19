@@ -5,11 +5,11 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using Unity.VisualScripting;
+using JetBrains.Annotations;
 
 public class GamePlayHUD : MonoBehaviour
 {
     [SerializeField] private PausePanelView pausePanelView;
-
 
     [SerializeField] private TextMeshProUGUI textScore;
     [SerializeField] private TextMeshProUGUI textTimer;
@@ -18,16 +18,26 @@ public class GamePlayHUD : MonoBehaviour
 
     private WaitForSeconds gameTimerDisplayWait = new WaitForSeconds(1f);
 
+    private int currentScore = 0;
+    private int turnCount = 0;
+    private float totalTime = 0;
+
+    public int CurrectScore => currentScore;
+    public float TotalGamePlayTime => totalTime;
+    public int TotalTurnCount => turnCount;
+
+
     /// <summary>
     /// Render View
     /// </summary>
     public void RenderView()
     {
+        ResetData();
         pauseButton.onClick.RemoveAllListeners();
         pauseButton.onClick.AddListener(OnPauseButtonClicked);
 
-        textScore.text = "00";
-        textTimer.text = "00";
+        textScore.text = "0";
+        textTimer.text = "0";
     }
 
     /// <summary>
@@ -35,19 +45,32 @@ public class GamePlayHUD : MonoBehaviour
     /// </summary>
     public IEnumerator UpdateTimer()
     {
-        float time = 0;
         while (GameManager.Instance.GetCurrentState == GameManager.Instance.gameplayState)
         {
-            time += 1;
-            textTimer.text = time.ToString("0.00");
+            totalTime += 1;
+            textTimer.text = totalTime.ToString();
             yield return gameTimerDisplayWait;
         }
 
     }
 
-    private void Update()
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="score"></param>
+    public void UpdateScore(int score)
     {
+        UpdateTurnCount();
+        currentScore += score;
+        textScore.text = currentScore.ToString();
+    }
 
+    /// <summary>
+    /// Update Turn taken 
+    /// </summary>
+    public void UpdateTurnCount()
+    {
+        turnCount++;
     }
 
 
@@ -59,5 +82,15 @@ public class GamePlayHUD : MonoBehaviour
     {
         GameManager.Instance.ChangeState(GameManager.Instance.pauseState);
         pausePanelView.Render();
+    }
+
+    /// <summary>
+    /// Reset Data
+    /// </summary>
+    public void ResetData()
+    {
+        currentScore = 0;
+        totalTime = 0;
+        turnCount = 0;
     }
 }

@@ -182,7 +182,7 @@ public class GridManager : MonoBehaviour
         // Check for Game Over
         if(generatedCardList.Count == 0 )
         {
-
+            GameController.GameOverAction?.Invoke();
         }
     }
 

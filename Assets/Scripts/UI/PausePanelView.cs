@@ -4,12 +4,14 @@ using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 using System;
+using UnityEngine.SceneManagement;
 
 public class PausePanelView : MonoBehaviour
 {
     [SerializeField] private Button buttonClose;
     [SerializeField] private Button buttonResume;    
     [SerializeField] private Button buttonRestart;
+    [SerializeField] private Button buttonExit;
     [SerializeField] private Button buttonQuit;
 
 
@@ -47,7 +49,12 @@ public class PausePanelView : MonoBehaviour
 
         buttonQuit.onClick.RemoveAllListeners();
         buttonQuit.onClick.AddListener(OnQuitButtonClicked);
+
+        buttonExit.onClick.RemoveAllListeners();
+        buttonClose.onClick.AddListener(OnExitButtonClicked);
     }
+
+  
 
     private void PlayEntryAnimation()
     {
@@ -64,6 +71,7 @@ public class PausePanelView : MonoBehaviour
     private void OnQuitButtonClicked()
     {
         DisablePanel();
+        Application.Quit();
     }
 
     /// <summary>
@@ -104,5 +112,13 @@ public class PausePanelView : MonoBehaviour
     public void DisablePanel()
     {
         gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void OnExitButtonClicked()
+    {
+        SceneManager.LoadScene(GameConstants.MENU_SCENE);
     }
 }
