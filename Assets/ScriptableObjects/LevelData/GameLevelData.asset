@@ -34,12 +34,20 @@ MonoBehaviour:
       cardIcon: {fileID: 21300000, guid: 299f7ea2a43fda94aaaf70eae126b36e, type: 3}
     - cardID: 10
       cardIcon: {fileID: 21300000, guid: df89f55571c1e7246ba26e7081f36f49, type: 3}
-    gameLayouts:
-    - rowCount: 0
-      columnCount: 0
-    - rowCount: 0
-      columnCount: 0
-    - rowCount: 0
-      columnCount: 0
-    - rowCount: 0
-      columnCount: 0
+  gameLayouts:
+  - rowCount: 2
+    columnCount: 2
+  - rowCount: 2
+    columnCount: 3
+  - rowCount: 4
+    columnCount: 2
+  - rowCount: 4
+    columnCount: 3
+  - rowCount: 4
+    columnCount: 4
+  - rowCount: 3
+    columnCount: 4
+  - rowCount: 4
+    columnCount: 5
+  - rowCount: 5
+    columnCount: 4

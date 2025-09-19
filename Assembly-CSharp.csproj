@@ -74,6 +74,8 @@
     <Compile Include="Assets\Scripts\Manager\GameController.cs" />
     <Compile Include="Assets\Scripts\Manager\SoundManager.cs" />
     <Compile Include="Assets\Scripts\StateMachine\StateGameOver.cs" />
+    <Compile Include="Assets\Scripts\Manager\MainMenuManager.cs" />
+    <Compile Include="Assets\Scripts\Menu\LayoutItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

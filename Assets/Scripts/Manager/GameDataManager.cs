@@ -8,7 +8,7 @@ public class GameDataManager : ScriptableObject
 {
     public List<GameLevelData> gameLevels;
 
-
+    public List<GameLayout> gameLayouts;
 
     /// <summary>
     /// Get all Card Data
