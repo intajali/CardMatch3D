@@ -1,4 +1,5 @@
 using CardMatch.DataModel;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -28,6 +29,7 @@ public class GridManager : MonoBehaviour
 
     private WaitForSeconds cardGenerationDelay = new WaitForSeconds(0.5f);
     private Coroutine cardGenerateRoutine = null;
+
 
     private void Start()
     {
@@ -104,6 +106,7 @@ public class GridManager : MonoBehaviour
         }
         cardGenerateRoutine = StartCoroutine(StartCreatingCards());
 
+
     }
 
 
@@ -137,7 +140,13 @@ public class GridManager : MonoBehaviour
             newCard.RenderCard(cardDatas[i]);
 
             generatedCardList.Add(newCard);
+
+            yield return new WaitForSeconds(0.05f);
         }
+
+        yield return new WaitForSeconds(1f);
+        HideCards();
+
     }
 
     /// <summary>
@@ -150,6 +159,35 @@ public class GridManager : MonoBehaviour
         newCard.transform.localScale = Vector3.one;
 
         return newCard;
+    }
+
+    /// <summary>
+    /// Hide All cards
+    /// </summary>
+    private void HideCards()
+    {
+        if (generatedCardList == null) return;
+        for (int i = 0; i < generatedCardList.Count; i++)
+        {
+            generatedCardList[i].HideCard();
+        }
+    }
+
+    /// <summary>
+    /// Delete Card
+    /// </summary>
+    public void DeleteCard(Card card)
+    {
+        if(generatedCardList.Count > 0)
+        {
+            generatedCardList.Remove(card);
+        }
+
+        // Check for Game Over
+        if(generatedCardList.Count == 0 )
+        {
+
+        }
     }
 
     /// <summary>
