@@ -22,13 +22,13 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Vector2 padding = new Vector2(10, 10);
 
     private List<Vector2> gridPositions = new List<Vector2>();
-    private List<Card> generatedCardList = new List<Card>();
+    private List<Card> generatedCardList;
     private List<CardDataModel> cardDatas = new List<CardDataModel>();
 
     private WaitForSeconds cardGenerationDelay = new WaitForSeconds(0.5f);
     private Coroutine cardGenerateRoutine = null;
 
-
+    public int maxUniqueCard;
     /// <summary>
     /// 
     /// </summary>
@@ -82,7 +82,7 @@ public class GridManager : MonoBehaviour
     {
         cardDatas.Clear();
         int requiredCardCount = (rowCount * columnCount) / 2;
-
+        maxUniqueCard = requiredCardCount;
        // List<int> randomSpriteIndex = GetRandomUniqueNumbers(cards, requiredCardCount);
 
         for (int i = 0; i < requiredCardCount; i++)
@@ -127,6 +127,7 @@ public class GridManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator StartCreatingCards()
     {
+        generatedCardList = new List<Card>();
         yield return cardGenerationDelay;
         for (var i = 0; i < cardDatas.Count; i++)
         {
@@ -177,12 +178,6 @@ public class GridManager : MonoBehaviour
         {
             generatedCardList.Remove(card);
         }
-
-        // Check for Game Over
-        if(generatedCardList.Count == 0 )
-        {
-            GameController.GameOverAction?.Invoke();
-        }
     }
 
     /// <summary>
@@ -196,13 +191,12 @@ public class GridManager : MonoBehaviour
         {
           DestroyImmediate(card.gameObject);
         }
-        generatedCardList.Clear();
+        generatedCardList = null;
     }
 
     public void ResetGrid()
     {
         gridLayoutImage.enabled = false;
-        generatedCardList.Clear();
         gridPositions.Clear();
         cardDatas.Clear();
     }

@@ -27,6 +27,8 @@ public class GameController : MonoBehaviour
 
     private Coroutine gameTimerRoutine = null;
 
+    private int MatchedCardCount = 0;
+
     void OnEnable()
     {
         Init();
@@ -65,6 +67,8 @@ public class GameController : MonoBehaviour
     /// </summary>
     public void GameSetup()
     {
+        MatchedCardCount = 0;
+
         gameLayouts = dataManager.selectedGameLayout;
         gamePlayHUD.RenderView();
         gridManager.CreateGameBoard(gameLayouts.rowCount, gameLayouts.columnCount);
@@ -74,7 +78,7 @@ public class GameController : MonoBehaviour
     /// <summary>
     /// On Card Selected Callback
     /// </summary>
-    /// <param name="arg0"></param>
+    /// <param name="card"></param>
     private void OnCardSelected(Card card)
     {
         currentSelectedCard = card;
@@ -92,7 +96,8 @@ public class GameController : MonoBehaviour
             previousSelectedCard.DeleteCard();
             currentSelectedCard.DeleteCard();
             gamePlayHUD.UpdateScore(10);
-            
+            MatchedCardCount++;
+            CheckForGameOver();
         }
         else 
         {
@@ -113,6 +118,17 @@ public class GameController : MonoBehaviour
     private void OnCardDeleted(Card card)
     {
         gridManager.DeleteCard(card);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void CheckForGameOver()
+    {
+        if(MatchedCardCount == gridManager.maxUniqueCard)
+        {
+            GameOverAction?.Invoke();
+        }
     }
 
     /// <summary>
