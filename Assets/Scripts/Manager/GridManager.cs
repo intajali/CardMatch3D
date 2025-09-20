@@ -128,7 +128,6 @@ public class GridManager : MonoBehaviour
     IEnumerator StartCreatingCards()
     {
         yield return cardGenerationDelay;
-        generatedCardList = new List<Card>();
         for (var i = 0; i < cardDatas.Count; i++)
         {
             Card newCard = GenerateNewCard(i);

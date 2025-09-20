@@ -10,6 +10,20 @@ public class GameDataManager : ScriptableObject
 
     public List<GameLayout> gameLayouts;
 
+    public GameLayout selectedGameLayout;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="layoutData"></param>
+    public void UpdateSelectedGameLayput(Vector2Int layoutData)
+    {
+        selectedGameLayout.rowCount = layoutData.x;
+        selectedGameLayout.columnCount = layoutData.y;
+
+    }
+
+
     /// <summary>
     /// Get all Card Data
     /// </summary>

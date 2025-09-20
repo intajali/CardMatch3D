@@ -65,6 +65,7 @@ public class GameController : MonoBehaviour
     /// </summary>
     public void GameSetup()
     {
+        gameLayouts = dataManager.selectedGameLayout;
         gamePlayHUD.RenderView();
         gridManager.CreateGameBoard(gameLayouts.rowCount, gameLayouts.columnCount);
         gridManager.GenerateCardData(gameLayouts.rowCount, gameLayouts.columnCount, dataManager.GetCardData());
@@ -121,7 +122,6 @@ public class GameController : MonoBehaviour
     {
         gridManager.ClearCards();
         gridManager.ResetGrid();
-
         Invoke("GameSetup",0.25f);
 
     }

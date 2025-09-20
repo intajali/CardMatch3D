@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 7062140534421547187}
   - component: {fileID: 7062140534421547180}
   - component: {fileID: 7062140534421547184}
-  - component: {fileID: 7062140534421547185}
+  - component: {fileID: 6362947808721760896}
   m_Layer: 5
   m_Name: LayoutItem
   m_TagString: Untagged
@@ -249,12 +249,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   layoutText: {fileID: 7062140533813676645}
-  layoutButton: {fileID: 7062140534421547185}
+  layoutButton: {fileID: 0}
   checkedIcon: {fileID: 7062140535281070692}
+  checkedToggle: {fileID: 6362947808721760896}
   Rows: 0
   Columns: 0
   IsSelected: 0
---- !u!114 &7062140534421547185
+--- !u!114 &6362947808721760896
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -263,7 +264,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7062140534421547182}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -295,9 +296,13 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 7062140534421547187}
-  m_OnClick:
+  toggleTransition: 1
+  graphic: {fileID: 0}
+  m_Group: {fileID: 0}
+  onValueChanged:
     m_PersistentCalls:
       m_Calls: []
+  m_IsOn: 0
 --- !u!1 &7062140535281070694
 GameObject:
   m_ObjectHideFlags: 0

@@ -51,7 +51,7 @@ public class PausePanelView : MonoBehaviour
         buttonQuit.onClick.AddListener(OnQuitButtonClicked);
 
         buttonExit.onClick.RemoveAllListeners();
-        buttonClose.onClick.AddListener(OnExitButtonClicked);
+        buttonExit.onClick.AddListener(OnExitButtonClicked);
     }
 
   
@@ -119,6 +119,7 @@ public class PausePanelView : MonoBehaviour
     /// </summary>
     private void OnExitButtonClicked()
     {
+        GameManager.Instance.ChangeState(GameManager.Instance.stateHold);
         SceneManager.LoadScene(GameConstants.MENU_SCENE);
     }
 }
