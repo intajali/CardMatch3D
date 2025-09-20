@@ -70,8 +70,12 @@ public class PausePanelView : MonoBehaviour
     /// </summary>
     private void OnQuitButtonClicked()
     {
+        GameManager.Instance.ChangeState(GameManager.Instance.stateHold);
         DisablePanel();
+        Debug.Log("Game Application Quit");
+#if !UNITY_EDITOR
         Application.Quit();
+#endif
     }
 
     /// <summary>
